@@ -4,7 +4,7 @@
 SSID=`kdialog --title "Access Point Connection" --inputbox "Please enter the SSID: "`
 
 if [ -z "$SSID" ]; then
-    echo "SSID cannot be empty"
+    kdialog --error "SSID cannot be empty"
     exit 1
 fi
 
