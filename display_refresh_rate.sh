@@ -1,10 +1,10 @@
 #!/bin/bash
-# This script toggles the refresh rate
+# This script toggles the refresh rate of the main display
 
 DISPLAY_NAME=$(xrandr | grep " connected primary" | awk '{ print $1 }')
 
-if [ "$DESKTOP_SESSION" = plasma ]; then
-
+#if [ "$DESKTOP_SESSION" = plasma ]; then
+if true; then
     CURRENT_RATE=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+\*' | grep -Eo '[[:digit:]]+')
 
     CURRENT_RES=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+x[[:digit:]]+@[[:digit:]]+\*' | grep -Eo '[[:digit:]]+x[[:digit:]]+@' | grep -Eo '[[:digit:]]+x[[:digit:]]+')
