@@ -1,15 +1,15 @@
 #!/bin/bash
-# This script finds the strongest access point in a network and connects to it with NetworkManager
+# This script finds the strongest access point in a network, connects to it with NetworkManager, and locks the BSSID
 
 # DE-specific commands
-if [ "$DESKTOP_SESSION" = xfce ]; then
-    DIALOG_COMMAND="zenity"
-    DIALOG_ENTRY_ARGUMENT="--entry --text"
-    DIALOG_ERROR_ARGUMENT="--error --text"
-else
+if [ "$DESKTOP_SESSION" = plasma ]; then
     DIALOG_COMMAND="kdialog"
     DIALOG_ENTRY_ARGUMENT="--inputbox"
     DIALOG_ERROR_ARGUMENT="--error"
+else
+    DIALOG_COMMAND="zenity"
+    DIALOG_ENTRY_ARGUMENT="--entry --text"
+    DIALOG_ERROR_ARGUMENT="--error --text"
 fi
 
 # Prompt the user to enter the SSID
