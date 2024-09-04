@@ -1,10 +1,22 @@
+#!/bin/bash
 # This script finds the strongest access point in a network and connects to it with NetworkManager
 
+# DE-specific commands
+if [ "$DESKTOP_SESSION" = xfce ]; then
+    DIALOG_COMMAND="zenity"
+    DIALOG_ENTRY_ARGUMENT="--entry --text"
+    DIALOG_ERROR_ARGUMENT="--error --text"
+else
+    DIALOG_COMMAND="kdialog"
+    DIALOG_ENTRY_ARGUMENT="--inputbox"
+    DIALOG_ERROR_ARGUMENT="--error"
+fi
+
 # Prompt the user to enter the SSID
-SSID=`kdialog --title "Access Point Connection" --inputbox "Please enter the SSID: "`
+SSID=$($DIALOG_COMMAND --title "Access Point Connection" $DIALOG_ENTRY_ARGUMENT "Please enter the SSID: ")
 
 if [ -z "$SSID" ]; then
-    kdialog --error "SSID cannot be empty"
+    $DIALOG_COMMAND $DIALOG_ERROR_ARGUMENT "SSID cannot be empty"
     exit 1
 fi
 
@@ -13,7 +25,7 @@ nmcli device wifi rescan
 SSID_EXISTS=$(nmcli -t -f SSID device wifi list | awk -v ssid="$SSID" -F ':' '$1 == ssid {print $1}')
 
 if [ -z "$SSID_EXISTS" ]; then
-    kdialog --error "SSID '$SSID' not found in the list of available networks."
+    $DIALOG_COMMAND $DIALOG_ERROR_ARGUMENT "SSID '$SSID' not found in the list of available networks."
     exit 1
 fi
 
