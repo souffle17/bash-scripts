@@ -7,7 +7,7 @@ DISPLAY_NAME=$(xrandr | grep " connected primary" | awk '{ print $1 }')
 if true; then
     CURRENT_RATE=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+\*' | grep -Eo '[[:digit:]]+')
 
-    CURRENT_RES=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+x[[:digit:]]+@[[:digit:]]+\*' | grep -Eo '[[:digit:]]+x[[:digit:]]+@' | grep -Eo '[[:digit:]]+x[[:digit:]]+')
+    CURRENT_RES=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+x[[:digit:]]+@[[:digit:]]+\*' | grep -Eo '[[:digit:]]+x[[:digit:]]+')
     
     NEW_RATE=$((165 + 60 - $((CURRENT_RATE))))
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script finds the strongest access point in a network, connects to it with NetworkManager, and locks the BSSID
 
-# DE-specific commands
+# DE-specific dialog boxes
 if [ "$DESKTOP_SESSION" = plasma ]; then
     DIALOG_COMMAND="kdialog"
     DIALOG_ENTRY_ARGUMENT="--inputbox"
