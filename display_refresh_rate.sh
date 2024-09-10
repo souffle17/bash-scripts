@@ -17,8 +17,10 @@ else
     # xrandr
     CURRENT_RES=$(xrandr | grep -Eo '.*\*' | awk '{ print $1 }')
     NEW_RATE=$(xrandr | grep -E '.*\*' | grep -Eo '[[:digit:]]*\.[[:digit:]]* \+' | grep -Eo '[[:digit:]]*\.[[:digit:]]*')
-
-    xrandr --output "$DISPLAY_NAME" --mode "$CURRENT_RES" --rate "$NEW_RATE"
-
-    zenity --title "Display Config" --info --text "Display $DISPLAY_NAME set to $CURRENT_RES@$NEW_RATE" 
+    if [[ $NEW_RATE =~ [0-9|\.]* ]]; then
+        xrandr --output "$DISPLAY_NAME" --mode "$CURRENT_RES" --rate "$NEW_RATE"
+        zenity --title "Display Config" --info --text "Display $DISPLAY_NAME set to $CURRENT_RES@$NEW_RATE" 
+    else
+        zenity --title "Display Config" --error --text "Could not use xrandr to change refresh rate"
+    fi	
 fi
