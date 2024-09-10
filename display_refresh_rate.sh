@@ -1,10 +1,9 @@
 #!/bin/bash
 # This script toggles the refresh rate of the main display
 
-DISPLAY_NAME=$(xrandr | grep " connected primary" | awk '{ print $1 }')
+DISPLAY_NAME=$(xrandr | grep " connected" | awk '{ print $1 }')
 
-#if [ "$DESKTOP_SESSION" = plasma ]; then
-if true; then
+if [ "$DESKTOP_SESSION" = plasma ]; then
     CURRENT_RATE=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+\*' | grep -Eo '[[:digit:]]+')
 
     CURRENT_RES=$(kscreen-doctor -o | grep -Eo '[[:digit:]]+x[[:digit:]]+@[[:digit:]]+\*' | grep -Eo '[[:digit:]]+x[[:digit:]]+')
@@ -15,6 +14,11 @@ if true; then
 
     kdialog --title "Display Config" --msgbox "Display $DISPLAY_NAME set to $CURRENT_RES@$NEW_RATE"
 else
-    # TODO
-    true
+    # xrandr
+    CURRENT_RES=$(xrandr | grep -Eo '.*\*' | awk '{ print $1 }')
+    NEW_RATE=$(xrandr | grep -E '.*\*' | grep -Eo '[[:digit:]]*\.[[:digit:]]* \+' | grep -Eo '[[:digit:]]*\.[[:digit:]]*')
+
+    xrandr --output "$DISPLAY_NAME" --mode "$CURRENT_RES" --rate "$NEW_RATE"
+
+    zenity --title "Display Config" --info --text "Display $DISPLAY_NAME set to $CURRENT_RES@$NEW_RATE" 
 fi
